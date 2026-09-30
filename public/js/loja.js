@@ -273,11 +273,41 @@ async function carregarTextoIA() {
     $('#vitrine-texto').textContent = d.conteudo;
     marca.hidden = false;
     marca.innerHTML = `<span aria-hidden="true">🤖</span> Texto escrito por <b>${esc(d.modelo)}</b> com base no nosso cardápio`;
+  } else if (d.precisa_login) {
+    // visitante anônimo: texto padrão + convite (a cota da IA só é gasta com login)
+    marca.hidden = false;
+    marca.innerHTML = '<span aria-hidden="true">🤖</span> Entre na sua conta para ver a sugestão da pizzar<b>IA</b>';
   } else if (!d.disponivel) {
     marca.hidden = false;
     marca.innerHTML = '<span aria-hidden="true">🤖</span> A IA entra no ar assim que a chave <b>GEMINI_API_KEY</b> estiver configurada';
   }
+
+  // O botão de gerar outro texto só aparece para quem está logado como admin:
+  // regenerar chama a API de IA, que é uma rota protegida.
+  const me = await apiSilencioso('/api/auth/me');
+  if (me?.admin) $('#btn-gerar-ia').hidden = false;
 }
+
+async function regenerarTextoIA() {
+  const btn = $('#btn-gerar-ia');
+  btn.disabled = true;
+  btn.innerHTML = '<span aria-hidden="true">🤖</span> Gerando…';
+  // `avisar` só existe para toasts do fluxo de conta; aqui usamos a própria marca
+  const d = await apiSilencioso('/api/admin/ia/visao-geral', { method: 'POST' });
+  btn.disabled = false;
+  btn.innerHTML = '🔁 Gerar outro texto';
+
+  if (!d || d.erro) {
+    $('#marca-ia').innerHTML = `<span aria-hidden="true">🤖</span> Não deu para gerar agora (${esc(d?.erro || 'tente de novo')})`;
+    return;
+  }
+  if (d.conteudo) $('#vitrine-texto').textContent = d.conteudo;
+  $('#marca-ia').innerHTML = `<span aria-hidden="true">🤖</span> Texto escrito por <b>${esc(d.modelo)}</b> com base no nosso cardápio`;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  $('#btn-gerar-ia')?.addEventListener('click', regenerarTextoIA);
+});
 
 // ============================================================
 //  REQUISITO 1 e 2 — destaques, listagem e filtros

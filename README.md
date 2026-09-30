@@ -154,12 +154,15 @@ no front. Os filtros de tamanho e ordenação (relevância, avaliação, novidad
 nome) vão para a query. O botão **⭐ Só destaques** liga e desliga o atributo `destaque`;
 os destaques continuam visíveis no topo enquanto a lista é filtrada.
 
-**3 — IA.** O admin clica em *Gerar texto da IA* e o backend consulta o Gemini com
-`responseMimeType: application/json` + `responseSchema`, o que garante JSON válido sempre.
-O texto é guardado em `conteudo_ia` e a home o exibe com um selo dizendo que foi gerado por
-IA. A mesma chave gera, por pizza, uma descrição curta e tags (`ia_descricao`, `ia_tags`),
-e uma **sugestão personalizada** por cliente a partir do histórico de pedidos dele.
-Quando a chave não está configurada a página continua funcionando e avisa o que falta.
+**3 — IA.** O admin clica em *Gerar outro texto* (na própria vitrine, com o selo 🤖) e o
+backend consulta o Gemini com `responseMimeType: application/json` + `responseSchema`, o
+que garante JSON válido sempre e um ângulo criativo sorteado a cada chamada. O texto é
+guardado em `conteudo_ia` e a home o exibe com um selo dizendo que foi gerado por IA
+(visitante anônimo vê o texto padrão com um convite para entrar — a cota da API só é
+gasta depois do login). A mesma chave gera, por pizza, uma descrição curta e tags
+(`ia_descricao`, `ia_tags`), e uma **sugestão personalizada** por cliente a partir do
+histórico de pedidos dele. Quando a chave não está configurada a página continua
+funcionando e avisa o que falta.
 
 **5 — UUID no LocalStorage.** O `id_cliente` é um `UUID` gerado pelo PostgreSQL. No
 cadastro/login a resposta traz o UUID e ele vai para `localStorage["cliente_id_pt2000"]`.

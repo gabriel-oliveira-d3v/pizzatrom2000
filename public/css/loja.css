@@ -142,6 +142,10 @@
   font-weight: 600;
 }
 .marca-ia b { font-weight: 800; }
+/* a versão-botão do selo: reaproveita o visual, só muda o cursor e o foco */
+.marca-ia--btn { cursor: pointer; font-family: inherit; }
+.marca-ia--btn:hover { background: #f7e3b0; }
+.marca-ia--btn:disabled { opacity: .55; cursor: wait; }
 
 /* carimbo de balcão girado */
 .carimbo {

@@ -116,12 +116,24 @@ async function gerarVisaoGeral(pizzas) {
     .map((p) => `- ${p.nome} (${p.tamanho}, R$ ${Number(p.preco).toFixed(2)}): ${p.ingredientes}${p.destaque ? ' [destaque]' : ''}`)
     .join('\n');
 
+  // um "ângulo criativo" aleatório a cada geração, para que o mesmo cardápio
+  // produza textos diferentes ao clicar de novo no botão (evita a sensação de
+  // texto travado e mostra que a chamada está acontecendo de verdade)
+  const angulos = [
+    'tradição e fermentação lenta da massa',
+    'ingredientes frescos colhidos no dia',
+    'a noite de pizza com quem você ama',
+    'o jeitinho artesanal de pizzaria de bairro',
+    'a variedade: clássicas, vegetarianas e doces',
+  ];
+  const angulo = angulos[Math.floor(Math.random() * angulos.length)];
+
   const prompt = `Estas são as pizzas do cardápio da PizzaTrom2000:
 ${lista}
 
-Escreva um texto curto e convidativo apresentando a loja para a página inicial.`;
+Escreva um texto curto e convidativo apresentando a loja para a página inicial, com ênfase em ${angulo}. Não repita os mesmos ganchos de sempre; seja criativo e direto.`;
 
-  const r = await consultarIA(prompt, schema);
+  const r = await consultarIA(prompt, schema, { temperatura: 0.9 });
   return {
     titulo: String(r.titulo || 'PizzaTrom2000').slice(0, 80),
     conteudo: String(r.texto || '').slice(0, 600),

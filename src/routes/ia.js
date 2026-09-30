@@ -13,8 +13,15 @@ const router = express.Router();
 
 // ---------- público ----------
 // Requisito 3: a página principal exibe dados obtidos por consulta a IA
-// e indica que o conteúdo foi gerado por IA.
+// e indica que o conteúdo foi gerado por IA. Só devolve o texto para
+// quem está logado; visitante anônimo fica com o texto padrão e um
+// convite para entrar (assim a cota do Gemini não é gasta na vitrine).
 router.get('/visao-geral', async (req, res) => {
+  const logado = Boolean(req.session?.id_cliente || req.session?.id_admin);
+  if (!logado) {
+    return res.json({ disponivel: ia.IA_DISPONIVEL(), modelo: ia.MODELO(), gerado_por_ia: false, precisa_login: true });
+  }
+
   const salvo = await db.prepare(
     "SELECT titulo, conteudo, gerado_em, modelo FROM conteudo_ia WHERE chave = 'visao_geral'"
   ).get();
