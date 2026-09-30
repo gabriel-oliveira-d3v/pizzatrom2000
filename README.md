@@ -235,6 +235,9 @@ idempotente: rodar de novo não duplica nada.
 | Back-end | **Render** | Node.js com `npm start` |
 | Front-end | **Vercel** | Hospeda os arquivos de `public/` |
 
+**No ar agora:** front em <https://pizzatrom2000.vercel.app> · back em
+<https://pizzatrom2000.onrender.com> (o painel fica em `/admin/login.html`).
+
 O back-end também serve o front (`express.static`), o que permite rodar tudo em um lugar
 só. Para a arquitetura pedida (front e back separados):
 
@@ -244,6 +247,7 @@ só. Para a arquitetura pedida (front e back separados):
 2. **Vercel** — novo projeto com o mesmo repositório, *Output Directory* = `public`.
    Após o primeiro deploy, edite `public/js/config.js` e troque
    `window.__API_BASE__ = ''` pela URL do Render.
+   (No fork atual o `config.js` já detecta produção e aponta para o Render sozinho.)
 3. O front fala com o back usando `credentials: 'include'` e o header `X-Cliente-Id`; o
    `CORS_ORIGENS` do Render precisa listar exatamente a origem do front.
 
