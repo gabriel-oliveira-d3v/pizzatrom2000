@@ -14,6 +14,10 @@ const seed = require('./src/db/seed');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Em produção o Express roda atrás do proxy do Render. Sem isto os
+// cookies com `secure: true` seriam descartados silenciosamente.
+app.set('trust proxy', 1);
+
 // ---------- CORS (front na Vercel, back no Render) ----------
 const CORS_ORIGENS = (process.env.CORS_ORIGENS || 'http://localhost:3000')
   .split(',').map((o) => o.trim()).filter(Boolean);
