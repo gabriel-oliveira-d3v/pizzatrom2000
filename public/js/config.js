@@ -1,12 +1,14 @@
 // ============================================================
 //  Configuração da API.
 //
-//  Em desenvolvimento o front roda na mesma origem do back,
-//  então API_BASE fica vazio e basta usar caminho relativo.
+//  Em desenvolvimento (localhost) o back e o front ficam na mesma
+//  origem, então API_BASE fica vazio e basta usar caminho relativo.
 //
-//  Em produção o front fica na Vercel e o back no Render: troque
-//  a linha abaixo pela URL do Render (o mesmo valor fica no
-//  CORS_ORIGENS do servidor). O deploy script faz isso
-//  automaticamente a partir da variável de ambiente RENDER_API_URL.
+//  Fora de localhost o front está na Vercel e o back no Render,
+//  então apontamos direto para a API. Se o serviço mudar de nome
+//  ou de região, troque a constante abaixo (e espelhe no
+//  CORS_ORIGENS do servidor).
 // ============================================================
-window.__API_BASE__ = '';
+window.__API_BASE__ = /^(localhost|127\.0\.0\.1)$/.test(location.hostname)
+  ? ''
+  : 'https://pizzatrom2000.onrender.com';
