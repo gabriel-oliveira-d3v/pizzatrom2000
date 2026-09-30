@@ -17,12 +17,24 @@ async function enviarEmail({ para, assunto, texto }) {
   const r = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${CHAVE()}` },
-    body: JSON.stringify({ from: REMETENTE, to: [para], subject: assunto, text }),
+    body: JSON.stringify({ from: REMETENTE(), to: [para], subject: assunto, text: texto }),
   });
 
   const dados = await r.json().catch(() => ({}));
   if (!r.ok) {
-    return { enviado: false, motivo: `Resend ${r.status}: ${(dados?.message || '').slice(0, 200)}` };
+    const motivo = String(dados?.message || '');
+    // No modo de teste (sem domínio verificado) a Resend só entrega para o
+    // e-mail do dono da chave e rejeita domínios de exemplo. Esse é o motivo
+    // mais comum de recusa, então vale explicar em vez de despejar a API.
+    const modoTeste = /testing emails? to your own email address|use our testing email address/i.test(motivo);
+    return {
+      enviado: false,
+      motivo: modoTeste
+        ? 'O remetente de teste da Resend só entrega para o e-mail do dono da chave '
+          + 'e não aceita endereços @example.com. Para enviar a clientes reais, '
+          + 'verifique um domínio em resend.com/domains e troque EMAIL_REMETENTE.'
+        : `Resend ${r.status}: ${motivo.slice(0, 200) || 'falha no envio.'}`,
+    };
   }
   return { enviado: true, id: dados?.id };
 }
