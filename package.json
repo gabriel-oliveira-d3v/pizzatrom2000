@@ -1,0 +1,19 @@
+{
+  "name": "pizzatrom2000",
+  "version": "1.0.0",
+  "description": "Site da pizzaria PizzaTrom2000 - loja + painel administrativo",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "seed": "node src/db/seed.js",
+    "migrate": "node src/db/migrate.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^18.0.5",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "pg": "^8.23.1"
+  }
+}

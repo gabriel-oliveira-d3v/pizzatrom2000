@@ -1,0 +1,293 @@
+/* ============================================================
+   PizzaTrom2000 — base compartilhada (loja + painel)
+   Metáfora visual: a nota/comanda de pedido de uma pizzaria de
+   bairro — papel cor de massa,_edge serrilhada, carimbo de
+   balcão e tipografia de fachada.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght,wdth@12..96,200..800,75..100&display=swap');
+
+:root {
+  /* campo dominante: vermelho de tomato, não creme */
+  --tomate:        #c62828;
+  --tomate-vivo:   #e0342b;
+  --tomate-fundo:  #a81f1f;
+  --tomate-tinta:  #7d1614;
+
+  /* superfícies: papel cor de massa */
+  --massa:         #fdf3dd;
+  --massa-clara:   #fffaf0;
+  --massa-vazia:   #f2e5c6;
+
+  /* tinta (nunca preto puro) */
+  --tinta:         #2a1c18;
+  --tinta-media:   #6b554d;
+  --tinta-fraca:   #a08d84;
+
+  /* acentos, usados com parcimônia */
+  --manjericao:    #2f7a3f;
+  --manjericao-claro: #e3f0e4;
+  --queijo:        #f2b705;
+  --queijo-claro:  #fdf0c8;
+
+  --borda-ticket:  #ddcba3;
+  --sombra-ticket: 0 2px 0 rgba(42, 28, 24, .10);
+  --sombra-alta:   0 18px 40px rgba(20, 8, 6, .28);
+
+  --display: 'Bricolage Grotesque', 'Archivo', sans-serif;
+  --texto:   'Archivo', 'Segoe UI', system-ui, sans-serif;
+
+  --raio: 3px; /* tickets quase não arredondam — é papel */
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--texto);
+  background: var(--tomate);
+  background-image:
+    radial-gradient(circle at 18% 12%, rgba(255, 255, 255, .05) 0 22%, transparent 45%),
+    radial-gradient(circle at 84% 78%, rgba(0, 0, 0, .09) 0 20%, transparent 44%);
+  color: var(--tinta);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+button { cursor: pointer; font: inherit; }
+button:disabled { cursor: not-allowed; opacity: .45; }
+a { color: inherit; }
+
+/* ---------- Foco visível (teclado) ---------- */
+:focus-visible {
+  outline: 3px solid var(--queijo);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   Borda serrilhada — a assinatura do projeto.
+   Borda da nota de papel que sai da impressora.
+   ============================================================ */
+.perfurado {
+  position: relative;
+}
+.perfurado::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: -7px;
+  height: 8px;
+  background-image: radial-gradient(circle at 6px -2px, transparent 0 6px, var(--tomate) 6px);
+  background-size: 12px 8px;
+  background-repeat: repeat-x;
+}
+.perfurado-fundo { background: var(--massa); }
+
+/* ---------- Título ---------- */
+.display {
+  font-family: var(--display);
+  font-weight: 800;
+  font-stretch: 78%;
+  line-height: .94;
+  letter-spacing: -.02em;
+}
+
+/* ============================================================
+   Botões — duas opções e pronto
+   ============================================================ */
+.btn {
+  border: none;
+  border-radius: var(--raio);
+  padding: 11px 20px;
+  font-weight: 700;
+  font-size: .95rem;
+  letter-spacing: .01em;
+  background: var(--tinta);
+  color: var(--massa-clara);
+  transition: transform .12s ease, background .15s ease, box-shadow .12s ease;
+}
+.btn:hover { background: #3d2a24; }
+.btn:active { transform: translateY(1px); }
+
+.btn--principal { background: var(--manjericao); color: #fff; }
+.btn--principal:hover { background: #256132; }
+
+.btn--claro { background: var(--massa-clara); color: var(--tinta); border: 2px solid var(--tinta); }
+.btn--claro:hover { background: var(--queijo); }
+
+.btn--fantasma { background: transparent; color: var(--massa-clara); border: 2px solid rgba(253, 243, 221, .5); }
+.btn--fantasma:hover { background: rgba(253, 243, 221, .14); border-color: var(--massa-clara); }
+
+.btn--perigo { background: var(--tomate-tinta); color: #fff; }
+.btn--perigo:hover { background: #63100e; }
+
+.btn--mini { padding: 5px 11px; font-size: .8rem; }
+.btn--largo { width: 100%; }
+
+/* ============================================================
+   Campos de formulário
+   ============================================================ */
+.campo { margin-bottom: 15px; }
+.campo > label,
+.campo-legenda {
+  display: block;
+  font-weight: 600;
+  font-size: .82rem;
+  margin-bottom: 5px;
+  color: var(--tinta-media);
+}
+.campo-legenda--obrig { color: var(--tomate-fundo); }
+
+input, select, textarea {
+  font: inherit;
+  font-size: .95rem;
+  padding: 10px 13px;
+  border: 2px solid var(--borda-ticket);
+  border-radius: var(--raio);
+  width: 100%;
+  background: var(--massa-clara);
+  color: var(--tinta);
+}
+input::placeholder, textarea::placeholder { color: var(--tinta-fraca); }
+input:hover, select:hover, textarea:hover { border-color: var(--tinta-fraca); }
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--tomate);
+  box-shadow: 0 0 0 3px rgba(198, 40, 40, .16);
+}
+textarea { resize: vertical; min-height: 84px; line-height: 1.5; }
+select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--tinta) 50%), linear-gradient(135deg, var(--tinta) 50%, transparent 50%); background-position: calc(100% - 19px) 51%, calc(100% - 13px) 51%; background-size: 6px 6px; background-repeat: no-repeat; padding-right: 36px; }
+
+/* ============================================================
+   Tabelas
+   ============================================================ */
+.tabela-caixa {
+  background: var(--massa-clara);
+  border: 2px solid var(--tinta);
+  border-radius: var(--raio);
+  overflow: auto;
+  box-shadow: var(--sombra-ticket);
+}
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 11px 13px; text-align: left; border-bottom: 1px solid var(--borda-ticket); font-size: .9rem; }
+th {
+  background: var(--massa-vazia);
+  font-weight: 700;
+  font-size: .74rem;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--tinta-media);
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover td { background: var(--queijo-claro); }
+td .acoes-linha { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* ============================================================
+   Selos (status, destaque, nota)
+   ============================================================ */
+.selo {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: .74rem;
+  font-weight: 700;
+  border: 1.5px solid currentColor;
+  white-space: nowrap;
+}
+.selo--verde  { color: var(--manjericao); background: var(--manjericao-claro); }
+.selo--amarelo { color: #8a6200; background: var(--queijo-claro); }
+.selo--vermelho { color: var(--tomate-fundo); background: #fadcdb; }
+.selo--neutro { color: var(--tinta-media); background: var(--massa-vazia); }
+.selo--tinta { color: var(--massa-clara); background: var(--tinta); border-color: var(--tinta); }
+
+/* ============================================================
+   Modais
+   ============================================================ */
+.modal-fundo {
+  position: fixed;
+  inset: 0;
+  background: rgba(42, 12, 10, .62);
+  backdrop-filter: blur(3px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 100;
+  overflow-y: auto;
+}
+.modal-fundo.aberto { display: flex; }
+.modal {
+  background: var(--massa);
+  border: 3px solid var(--tinta);
+  border-radius: var(--raio);
+  padding: 26px;
+  width: 100%;
+  max-width: 470px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--sombra-alta);
+}
+.modal--largo { max-width: 720px; }
+.modal--estreito { max-width: 400px; }
+.modal h2 {
+  font-family: var(--display);
+  font-weight: 800;
+  font-stretch: 85%;
+  font-size: 1.5rem;
+  margin-bottom: 18px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--tinta);
+}
+.modal-acoes { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; flex-wrap: wrap; }
+
+/* ============================================================
+   Aviso flutuante
+   ============================================================ */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translate(-50%, 90px);
+  background: var(--tinta);
+  color: var(--massa-clara);
+  padding: 13px 24px;
+  border-radius: var(--raio);
+  border-left: 5px solid var(--queijo);
+  box-shadow: var(--sombra-alta);
+  opacity: 0;
+  transition: transform .3s cubic-bezier(.2, .9, .3, 1.2), opacity .3s;
+  z-index: 200;
+  pointer-events: none;
+  font-size: .95rem;
+  font-weight: 500;
+  max-width: min(92vw, 520px);
+}
+.toast.visivel { opacity: 1; transform: translate(-50%, 0); }
+.toast--erro { border-left-color: var(--tomate-vivo); }
+
+/* ---------- Estado vazio ---------- */
+.vazio {
+  text-align: center;
+  padding: 44px 22px;
+  color: var(--tinta-media);
+}
+.vazio p { margin-top: 8px; font-size: .93rem; line-height: 1.6; }
+.vazio strong { display: block; font-family: var(--display); font-weight: 700; font-size: 1.15rem; color: var(--tinta); margin-bottom: 4px; }
+
+/* ---------- Mensagem de erro em campo ---------- */
+.mensagem-erro { color: var(--tomate-fundo); font-size: .85rem; font-weight: 500; margin-top: 6px; min-height: 1.2em; }
+
+/* ---------- Carregando ---------- */
+.carregando { padding: 26px; color: var(--tinta-media); font-size: .93rem; }
+
+/* ---------- Estrela (avaliação) ---------- */
+.estrelas { display: inline-flex; gap: 1px; color: var(--queijo); font-size: .95rem; letter-spacing: 1px; }
+.estrelas--vazia { color: var(--borda-ticket); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}

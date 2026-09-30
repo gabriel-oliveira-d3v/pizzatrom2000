@@ -1,0 +1,262 @@
+/* ============================================================
+   PizzaTrom2000 — CSS exclusivo do painel administrativo
+   O painel mantém a mesma linguagem visual da loja (papel,
+   carimbo, tipografia de fachada) mas sobre fundo vermelho.
+   ============================================================ */
+
+/* ---------------- Topo ---------------- */
+.topo-admin {
+  background: var(--tomate-tinta);
+  border-bottom: 4px solid var(--tomate-fundo);
+  padding: 11px 20px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.topo-admin h1 {
+  font-family: var(--display);
+  font-weight: 800;
+  font-stretch: 78%;
+  font-size: 1.22rem;
+  color: var(--massa-clara);
+  white-space: nowrap;
+  letter-spacing: -.01em;
+}
+.topo-admin h1 span {
+  color: var(--queijo);
+  font-family: var(--texto);
+  font-weight: 500;
+  font-size: .66rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  margin-left: 6px;
+}
+
+#abas { display: flex; gap: 4px; flex: 1; flex-wrap: wrap; }
+.aba {
+  background: transparent;
+  color: rgba(253, 243, 221, .68);
+  border: 2px solid transparent;
+  padding: 7px 13px;
+  border-radius: var(--raio);
+  font-weight: 600;
+  font-size: .89rem;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.aba:hover { background: rgba(253, 243, 221, .12); color: var(--massa-clara); }
+.aba.ativa { background: var(--queijo); color: var(--tomate-tinta); border-color: var(--queijo); }
+
+.admin-user { display: flex; align-items: center; gap: 9px; font-size: .85rem; color: rgba(253, 243, 221, .8); }
+.admin-user strong { color: var(--massa-clara); }
+
+.container-admin { max-width: 1180px; margin: 0 auto; padding: 26px 20px 64px; }
+.secao { display: none; }
+.secao.ativa { display: block; }
+
+.secao-cab {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding-bottom: 10px;
+  border-bottom: 3px solid var(--tomate-fundo);
+}
+.secao-cab h2 {
+  font-family: var(--display);
+  font-weight: 800;
+  font-stretch: 80%;
+  font-size: 1.6rem;
+  color: var(--massa-clara);
+  line-height: 1;
+}
+.secao-cab .dica { font-size: .86rem; color: rgba(253, 243, 221, .68); max-width: 48ch; }
+.secao-cab select, .secao-cab .campo { max-width: 230px; }
+
+/* ============================================================
+   DASHBOARD
+   ============================================================ */
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
+  gap: 13px;
+  margin-bottom: 20px;
+}
+.kpi {
+  background: var(--massa);
+  border: 2px solid var(--tinta);
+  border-radius: var(--raio);
+  padding: 14px 15px;
+  box-shadow: var(--sombra-ticket);
+}
+.kpi-rotulo {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--tinta-media);
+}
+.kpi-valor {
+  font-family: var(--display);
+  font-weight: 800;
+  font-stretch: 84%;
+  font-size: 1.85rem;
+  line-height: 1.05;
+  margin-top: 5px;
+  font-variant-numeric: tabular-nums;
+}
+.kpi--dinheiro .kpi-valor { color: var(--manjericao); }
+.kpi--tomate .kpi-valor { color: var(--tomate); }
+
+/* Faixa de carimbo no topo do painel */
+.carimbo-painel {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--massa);
+  border: 3px solid var(--tinta);
+  border-radius: var(--raio);
+  padding: 18px 22px;
+  margin-bottom: 20px;
+  box-shadow: var(--sombra-ticket);
+  flex-wrap: wrap;
+}
+.carimbo-painel h2 {
+  font-family: var(--display);
+  font-weight: 800;
+  font-stretch: 76%;
+  font-size: 1.9rem;
+  line-height: .98;
+  text-transform: uppercase;
+  margin-right: auto;
+}
+.carimbo-painel p { font-size: .9rem; color: var(--tinta-media); max-width: 52ch; line-height: 1.55; }
+.selo-ia-painel {
+  background: var(--queijo-claro);
+  border: 1.5px dashed #b58c07;
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: .76rem;
+  color: #7a5800;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Grelha de gráficos: 4 gráficos em 2x2 no desktop */
+.graficos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 16px;
+}
+.grafico-caixa {
+  background: var(--massa);
+  border: 2px solid var(--tinta);
+  border-radius: var(--raio);
+  padding: 16px;
+  box-shadow: var(--sombra-ticket);
+}
+.grafico-titulo {
+  font-family: var(--display);
+  font-weight: 700;
+  font-stretch: 84%;
+  font-size: 1.05rem;
+  margin-bottom: 4px;
+  padding-bottom: 8px;
+  border-bottom: 2px dashed var(--borda-ticket);
+}
+.grafico-sub { font-size: .78rem; color: var(--tinta-fraca); margin: 5px 0 12px; }
+.grafico-livro { height: 240px; position: relative; }
+.grafico-livro canvas { width: 100% !important; }
+
+/* listas de apoio do dashboard */
+.dupla-listas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+/* ---------------- Pedidos ---------------- */
+.pedido-card {
+  background: var(--massa);
+  border: 2px solid var(--tinta);
+  border-radius: var(--raio);
+  padding: 14px 17px;
+  margin-bottom: 11px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  box-shadow: var(--sombra-ticket);
+}
+.pedido-card .info { display: flex; flex-direction: column; gap: 3px; font-size: .92rem; min-width: 230px; flex: 1; }
+.pedido-card .info strong { font-family: var(--display); font-weight: 700; font-stretch: 86%; font-size: 1.05rem; }
+.pedido-card .info .sub { color: var(--tinta-media); font-size: .82rem; }
+.pedido-card .acoes-pedido { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.pedido-card select { width: auto; min-width: 158px; padding: 8px 34px 8px 11px; font-size: .87rem; }
+
+/* ---------------- Avaliações ---------------- */
+.avaliacao-card {
+  background: var(--massa);
+  border: 2px solid var(--tinta);
+  border-radius: var(--raio);
+  padding: 15px 17px;
+  margin-bottom: 12px;
+  box-shadow: var(--sombra-ticket);
+}
+.avaliacao-cab { display: flex; justify-content: space-between; align-items: flex-start; gap: 13px; flex-wrap: wrap; }
+.avaliacao-quem { font-weight: 700; font-size: .95rem; }
+.avaliacao-quem small { display: block; font-weight: 400; color: var(--tinta-fraca); font-size: .78rem; margin-top: 2px; }
+.avaliacao-corpo { font-size: .92rem; line-height: 1.6; margin-top: 9px; }
+.avaliacao-acoes { display: flex; gap: 8px; align-items: center; margin-top: 12px; flex-wrap: wrap; }
+.avaliacao-acoes .campo { margin: 0; flex: 1; min-width: 220px; }
+.avaliacao-enviada {
+  margin-top: 10px;
+  font-size: .8rem;
+  color: var(--manjericao);
+  background: var(--manjericao-claro);
+  border-left: 3px solid var(--manjericao);
+  padding: 6px 10px;
+  display: inline-block;
+}
+
+/* ---------------- Detalhe do pedido ---------------- */
+.detalhe-itens td { font-size: .92rem; }
+.detalhe-total {
+  text-align: right;
+  font-family: var(--display);
+  font-weight: 800;
+  font-stretch: 86%;
+  font-size: 1.3rem;
+  margin-top: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.detalhe-meta { margin-bottom: 15px; font-size: .92rem; line-height: 1.7; }
+.detalhe-meta strong { color: var(--tinta); }
+
+.rodape-admin {
+  border-top: 2px solid rgba(253, 243, 221, .18);
+  margin-top: 26px;
+  padding-top: 14px;
+  font-size: .8rem;
+  color: rgba(253, 243, 221, .5);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ---------------- Responsivo ---------------- */
+@media (max-width: 720px) {
+  .topo-admin { gap: 11px; }
+  .topo-admin h1 { font-size: 1.05rem; }
+  .carimbo-painel h2 { font-size: 1.45rem; }
+  .container-admin { padding: 20px 14px 52px; }
+  .pedido-card { gap: 11px; }
+}

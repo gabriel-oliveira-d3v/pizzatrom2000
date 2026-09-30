@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PizzaTrom2000 — a pizza que toca o seu coração</title>
+  <meta name="description" content="Peça pizza online na PizzaTrom2000. Cardápio completo com destaques, avaliações de clientes e entrega rápida.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🍕</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/loja.css">
+</head>
+<body>
+
+  <!-- ============ TOPO ============ -->
+  <header class="topo">
+    <div class="topo-interno">
+      <a class="marca" href="#topo" aria-label="PizzaTrom2000, início">
+        <span class="marca-icone" aria-hidden="true">🍕</span>
+        <span class="marca-texto">
+          <span class="marca-nome">PizzaTrom2000</span>
+          <span class="marca-lema">A pizza que toca o seu coração</span>
+        </span>
+      </a>
+
+      <div class="topo-acoes">
+        <button class="btn btn--fantasma btn--mini btn--rotulo-longo" id="btn-minhas-interacoes" hidden>
+          <span aria-hidden="true">📋</span><span class="btn-texto"> Minhas interações</span>
+        </button>
+        <button class="btn btn--fantasma btn--mini btn--rotulo-longo" id="btn-conta">
+          <span aria-hidden="true" id="btn-conta-icone">👤</span><span class="btn-texto" id="btn-conta-texto"> Entrar</span>
+        </button>
+        <button class="btn btn--claro btn--mini carrinho-btn" id="btn-carrinho" aria-label="Abrir carrinho">
+          🛒<span class="btn-texto">Carrinho</span><span class="carrinho-badge" id="carrinho-qtd" hidden>0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" id="topo">
+
+    <!-- ============ VITRINE ============ -->
+    <section class="vitrine">
+      <div class="vitrine-grade">
+        <div>
+          <h1 class="vitrine-titulo">A pizza que<br><em>toca o coração</em></h1>
+          <p class="vitrine-texto" id="vitrine-texto">
+            Massas fermentadas por 24 horas, molho de tomate italiano e ingredientes que
+            chegam toda manhã. Peça online e acompanhe o status do seu pedido.
+          </p>
+          <p class="marca-ia" id="marca-ia" hidden></p>
+        </div>
+        <div class="carimbo" aria-hidden="true">
+          <div>
+            <span>Aberta<br>até 23h</span>
+            <small>desde 2000</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DESTAQUES ============ -->
+    <section class="bloco" id="bloco-destaques" hidden>
+      <div class="secao-cab">
+        <h2 class="secao-titulo">Destaques do balcão</h2>
+        <p class="secao-dica">As pizzas que escolhemos nesta semana — escolha uma e o botão de adicionar some se você não estiver logado.</p>
+      </div>
+      <div class="grade-pizzas" id="grade-destaques"></div>
+    </section>
+
+    <!-- ============ PESQUISA E FILTROS ============ -->
+    <section class="bloco">
+      <div class="secao-cab">
+        <h2 class="secao-titulo">Cardápio completo</h2>
+        <p class="secao-dica">Busque pelo nome ou por um ingrediente. Os destaques continuam aparecendo em destaque.</p>
+      </div>
+
+      <form class="pesquisa" id="form-pesquisa" role="search">
+        <div class="campo">
+          <label class="campo-legenda" for="busca">Buscar pizza ou ingrediente</label>
+          <div class="busca-envolucro">
+            <span class="busca-lupa" aria-hidden="true">🔍</span>
+            <input id="busca" type="search" placeholder="Ex.: calabresa, catupiry, mussarela" autocomplete="off">
+          </div>
+        </div>
+        <div class="campo">
+          <label class="campo-legenda pesquisa-rotulo" for="tamanho">Tamanho</label>
+          <select id="tamanho">
+            <option value="">Todos</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label class="campo-legenda pesquisa-rotulo" for="ordenar">Ordenar por</label>
+          <select id="ordenar">
+            <option value="relevancia">Relevância</option>
+            <option value="avaliacao">Melhor avaliadas</option>
+            <option value="novidades">Últimas cadastradas</option>
+            <option value="preco_asc">Menor preço</option>
+            <option value="preco_desc">Maior preço</option>
+            <option value="nome">Nome (A–Z)</option>
+          </select>
+        </div>
+        <div class="campo">
+          <button class="btn btn--principal" type="button" id="btn-limpar">Limpar</button>
+        </div>
+      </form>
+
+      <div class="filtros-linha">
+        <button class="chip" type="button" data-filtro-destaque="0" aria-pressed="false">⭐ Só destaques</button>
+        <span class="resultado-contagem" id="resultado-contagem" aria-live="polite"></span>
+      </div>
+
+      <div class="grade-pizzas" id="grade-pizzas">
+        <p class="carregando">Carregando o cardápio…</p>
+      </div>
+    </section>
+
+    <!-- ============ SOBRE A LOJA ============ -->
+    <section class="bloco sobre">
+      <h2>Sobre a PizzaTrom2000</h2>
+      <p>
+        Abrimos as portas em 2000 com um forno a lenha, duas mesas e um caderno de pedidos.
+        Hoje entregamos em toda a região, mas o forno continua o mesmo — e a massa ainda descansa
+        24 horas antes de entrar no forno.
+      </p>
+      <h3>O que você encontra aqui</h3>
+      <ul>
+        <li>Massa de fermentação lenta, feita todo dia.</li>
+        <li>Molho de tomate italiano e ingredientes fresco da feira.</li>
+        <li>Avaliações de quem já comeu — e resposta nossa para cada uma.</li>
+        <li>Acompanhamento do pedido, do balcão até a sua porta.</li>
+      </ul>
+      <h3>Avaliações e respostas</h3>
+      <p>
+        Depois de comer, você pode avaliar a pizza com uma nota de 1 a 5 e deixar um comentário.
+        A cozinha responde cada avaliação, e a resposta fica visível para todo mundo na página da pizza.
+      </p>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <p>PizzaTrom2000 — a pizza que toca o seu coração 🍕</p>
+    <p><a href="admin/login.html">Área administrativa</a></p>
+  </footer>
+
+  <!-- ============ MODAL: LOGIN / CADASTRO ============ -->
+  <div class="modal-fundo" id="modal-conta" role="dialog" aria-modal="true" aria-labelledby="modal-conta-titulo">
+    <div class="modal modal--estreito">
+      <h2 id="modal-conta-titulo">Entrar na sua conta</h2>
+
+      <div class="abas-conta" role="tablist">
+        <button class="aba-conta" id="aba-login" role="tab" aria-selected="true" type="button">Entrar</button>
+        <button class="aba-conta" id="aba-cadastro" role="tab" aria-selected="false" type="button">Criar conta</button>
+      </div>
+
+      <form id="form-login">
+        <div class="campo">
+          <label for="login-email">E-mail</label>
+          <input id="login-email" type="email" required autocomplete="email" placeholder="voce@email.com">
+        </div>
+        <div class="campo">
+          <label for="login-senha">Senha</label>
+          <input id="login-senha" type="password" required autocomplete="current-password" placeholder="Sua senha">
+        </div>
+        <div class="campo">
+          <label style="display:flex;align-items:center;gap:8px;font-weight:500;margin:0;cursor:pointer">
+            <input type="checkbox" id="login-manter" style="width:auto" checked>
+            Manter conectado neste dispositivo
+          </label>
+        </div>
+        <p class="mensagem-erro" id="login-erro"></p>
+        <button class="btn btn--principal btn--largo" type="submit" id="btn-login">Entrar</button>
+      </form>
+
+      <form id="form-cadastro" hidden>
+        <div class="campo">
+          <label for="cad-nome">Nome</label>
+          <input id="cad-nome" required minlength="3" maxlength="80" autocomplete="name" placeholder="Como podemos te chamar?">
+        </div>
+        <div class="campo">
+          <label for="cad-email">E-mail</label>
+          <input id="cad-email" type="email" required autocomplete="email" placeholder="voce@email.com">
+        </div>
+        <div class="campo">
+          <label for="cad-telefone">Telefone <span style="font-weight:400;color:var(--tinta-fraca)">(opcional)</span></label>
+          <input id="cad-telefone" maxlength="20" autocomplete="tel" placeholder="(00) 00000-0000">
+        </div>
+        <div class="campo">
+          <label for="cad-senha">Senha</label>
+          <input id="cad-senha" type="password" required minlength="6" autocomplete="new-password" placeholder="Mínimo de 6 caracteres">
+        </div>
+        <div class="campo">
+          <label style="display:flex;align-items:center;gap:8px;font-weight:500;margin:0;cursor:pointer">
+            <input type="checkbox" id="cad-manter" style="width:auto" checked>
+            Manter conectado neste dispositivo
+          </label>
+        </div>
+        <p class="mensagem-erro" id="cadastro-erro"></p>
+        <button class="btn btn--principal btn--largo" type="submit" id="btn-cadastro">Criar conta</button>
+      </form>
+
+      <div class="modal-acoes">
+        <button class="btn btn--claro" type="button" data-fechar-modal="modal-conta">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MODAL: DETALHE DA PIZZA ============ -->
+  <div class="modal-fundo" id="modal-detalhe" role="dialog" aria-modal="true" aria-labelledby="modal-detalhe-titulo">
+    <div class="modal modal--largo">
+      <h2 id="modal-detalhe-titulo">Detalhes da pizza</h2>
+      <div id="detalhe-corpo"></div>
+      <div class="modal-acoes">
+        <button class="btn btn--claro" type="button" data-fechar-modal="modal-detalhe">Fechar</button>
+        <button class="btn btn--principal" type="button" id="btn-detalhe-adicionar">Adicionar ao carrinho</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MODAL: CARRINHO / CHECKOUT ============ -->
+  <div class="modal-fundo" id="modal-carrinho" role="dialog" aria-modal="true" aria-labelledby="modal-carrinho-titulo">
+    <div class="modal">
+      <h2 id="modal-carrinho-titulo">Seu pedido</h2>
+      <div id="carrinho-itens"></div>
+      <div class="carrinho-total" id="carrinho-total"></div>
+
+      <form id="form-checkout">
+        <div class="campo">
+          <label for="tipo_entrega">Como você quer receber</label>
+          <select id="tipo_entrega">
+            <option value="delivery">Delivery — entregamos em casa</option>
+            <option value="retirada">Retirada no balcão</option>
+          </select>
+        </div>
+        <div class="campo" id="campo-endereco">
+          <label for="endereco">Endereço de entrega</label>
+          <input id="endereco" maxlength="220" placeholder="Rua, número, complemento, bairro">
+        </div>
+        <div class="campo">
+          <label for="obs-pedido">Observação do pedido <span style="font-weight:400;color:var(--tinta-fraca)">(opcional)</span></label>
+          <textarea id="obs-pedido" maxlength="300" placeholder="Ex.: capricha na orégano, entregar depois das 19h"></textarea>
+        </div>
+        <p class="mensagem-erro" id="checkout-erro"></p>
+        <div class="modal-acoes" style="justify-content:stretch">
+          <button type="button" class="btn btn--claro" id="btn-fechar-carrinho">Continuar comprando</button>
+          <button type="submit" class="btn btn--principal" id="btn-finalizar" style="flex:1">Finalizar pedido</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============ MODAL: MINHAS INTERAÇÕES ============ -->
+  <div class="modal-fundo" id="modal-interacoes" role="dialog" aria-modal="true" aria-labelledby="modal-interacoes-titulo">
+    <div class="modal modal--largo">
+      <h2 id="modal-interacoes-titulo">Minhas interações</h2>
+      <div class="abas-conta" role="tablist">
+        <button class="aba-conta" id="aba-pedidos" role="tab" aria-selected="true" type="button">Pedidos</button>
+        <button class="aba-conta" id="aba-avaliacoes" role="tab" aria-selected="false" type="button">Avaliações</button>
+      </div>
+      <div id="interacoes-resumo"></div>
+      <div id="interacoes-corpo"><p class="carregando">Carregando…</p></div>
+      <div class="modal-acoes">
+        <button class="btn btn--claro" type="button" data-fechar-modal="modal-interacoes">Fechar</button>
+        <button class="btn btn--perigo" type="button" id="btn-sair-conta">Sair da conta</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MODAL: PEDIDO ENVIADO ============ -->
+  <div class="modal-fundo" id="modal-sucesso" role="dialog" aria-modal="true" aria-labelledby="modal-sucesso-titulo">
+    <div class="modal modal--estreito">
+      <h2 id="modal-sucesso-titulo">Pedido recebido</h2>
+      <div id="sucesso-msg"></div>
+      <div class="modal-acoes">
+        <button class="btn btn--principal btn--largo" id="btn-ok" type="button">Ver meus pedidos</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="js/config.js"></script>
+  <script src="js/loja.js"></script>
+</body>
+</html>

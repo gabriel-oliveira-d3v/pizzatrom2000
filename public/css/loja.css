@@ -1,0 +1,548 @@
+/* ============================================================
+   PizzaTrom2000 — CSS exclusivo da loja (página do cliente)
+   ============================================================ */
+
+/* ---------------- Topo ---------------- */
+.topo {
+  background: var(--tomate-tinta);
+  border-bottom: 4px solid var(--tomate-fundo);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+.topo-interno {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  text-decoration: none;
+  color: var(--massa-clara);
+  margin-right: auto;
+}
+.marca-icone {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  background: var(--queijo);
+  color: var(--tomate-tinta);
+  border-radius: 50%;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+.marca-texto { line-height: 1; }
+.marca-nome {
+  font-family: var(--display);
+  font-weight: 800;
+  font-stretch: 76%;
+  font-size: 1.42rem;
+  letter-spacing: -.015em;
+  display: block;
+}
+.marca-lema {
+  display: block;
+  font-size: .68rem;
+  letter-spacing: .13em;
+  color: rgba(253, 243, 221, .62);
+  margin-top: 3px;
+}
+
+.topo-acoes { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+.carrinho-btn { position: relative; }
+.carrinho-badge {
+  display: inline-grid;
+  place-items: center;
+  min-width: 21px;
+  height: 21px;
+  padding: 0 5px;
+  margin-left: 5px;
+  background: var(--queijo);
+  color: var(--tomate-tinta);
+  border-radius: 999px;
+  font-size: .78rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.carrinho-badge[hidden] { display: none; }
+
+/* ---------------- Vitrine (hero) ---------------- */
+.container { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+
+.vitrine {
+  position: relative;
+  margin-top: 30px;
+  background: var(--massa);
+  border: 3px solid var(--tinta);
+  border-radius: var(--raio);
+  padding: 34px 36px 40px;
+  box-shadow: var(--sombra-alta);
+  overflow: hidden;
+}
+/* faixa listrada de papel de fornada, atrás da vitrine */
+.vitrine::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 10px;
+  background: repeating-linear-gradient(90deg, var(--tomate) 0 26px, var(--queijo) 26px 52px, var(--manjericao) 52px 78px);
+}
+
+.vitrine-grade {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 34px;
+  align-items: start;
+}
+
+.vitrine-titulo {
+  font-family: var(--display);
+  font-weight: 800;
+  font-stretch: 74%;
+  font-size: clamp(2.4rem, 6.4vw, 4.6rem);
+  line-height: .88;
+  letter-spacing: -.03em;
+  text-transform: uppercase;
+}
+.vitrine-titulo em {
+  font-style: normal;
+  display: block;
+  color: var(--tomate);
+}
+
+.vitrine-texto {
+  margin-top: 16px;
+  font-size: 1.03rem;
+  line-height: 1.62;
+  color: var(--tinta-media);
+  max-width: 46ch;
+}
+
+/* rótulo do conteúdo gerado por IA (requisito 3) */
+.marca-ia {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
+  padding: 5px 11px 5px 8px;
+  background: var(--queijo-claro);
+  border: 1.5px dashed #b58c07;
+  border-radius: 999px;
+  font-size: .76rem;
+  color: #7a5800;
+  font-weight: 600;
+}
+.marca-ia b { font-weight: 800; }
+
+/* carimbo de balcão girado */
+.carimbo {
+  justify-self: center;
+  align-self: center;
+  width: 168px;
+  height: 168px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  border: 5px double var(--tomate);
+  border-radius: 50%;
+  color: var(--tomate);
+  transform: rotate(-11deg);
+  padding: 12px;
+}
+.carimbo span {
+  display: block;
+  font-family: var(--display);
+  font-weight: 800;
+  font-stretch: 80%;
+  line-height: 1.02;
+  text-transform: uppercase;
+}
+.carimbo small { font-size: .62rem; letter-spacing: .16em; display: block; margin-top: 5px; }
+
+/* ---------------- Seções ---------------- */
+.bloco { margin-top: 44px; }
+
+.secao-cab {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid var(--tomate-fundo);
+}
+.secao-titulo {
+  font-family: var(--display);
+  font-weight: 800;
+  font-stretch: 80%;
+  font-size: 1.72rem;
+  letter-spacing: -.015em;
+  color: var(--massa-clara);
+  line-height: 1;
+}
+.secao-dica { font-size: .87rem; color: rgba(253, 243, 221, .7); max-width: 46ch; }
+
+/* ---------------- Barra de pesquisa e filtros ---------------- */
+.pesquisa {
+  background: var(--massa);
+  border: 3px solid var(--tinta);
+  border-radius: var(--raio);
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  gap: 12px;
+  align-items: end;
+  box-shadow: var(--sombra-ticket);
+}
+.pesquisa .campo { margin-bottom: 0; }
+.pesquisa-rotulo { font-size: .74rem; }
+
+.busca-envolucro { position: relative; }
+.busca-envolucro input { padding-left: 38px; }
+.busca-lupa {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--tinta-fraca);
+  pointer-events: none;
+  font-size: 1rem;
+}
+
+.filtros-linha {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  align-items: center;
+}
+.chip {
+  border: 2px solid rgba(253, 243, 221, .45);
+  background: transparent;
+  color: var(--massa-clara);
+  padding: 5px 13px;
+  border-radius: 999px;
+  font-size: .84rem;
+  font-weight: 600;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.chip:hover { background: rgba(253, 243, 221, .16); }
+.chip[aria-pressed='true'] {
+  background: var(--queijo);
+  border-color: var(--queijo);
+  color: var(--tomate-tinta);
+}
+
+.resultado-contagem {
+  margin-top: 14px;
+  font-size: .87rem;
+  color: rgba(253, 243, 221, .78);
+}
+.resultado-contagem b { color: var(--queijo); }
+
+/* ---------------- Grade de pizzas ---------------- */
+.grade-pizzas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(272px, 1fr));
+  gap: 18px;
+  margin-top: 16px;
+}
+
+/* A pizza é um recorte de nota de pedido:
+   coluna de preço à esquerda, borda serrilhada, código do item. */
+.ticket {
+  position: relative;
+  background: var(--massa);
+  border: 2px solid var(--tinta);
+  border-radius: var(--raio);
+  display: flex;
+  flex-direction: column;
+  transition: transform .14s ease, box-shadow .14s ease;
+  overflow: hidden;
+}
+.ticket:hover { transform: translateY(-3px); box-shadow: 0 10px 22px rgba(20, 8, 6, .22); }
+
+/* só nos itens da listagem geral (não nos destaques) */
+.ticket--serrilhado::after {
+  content: '';
+  position: absolute;
+  inset-inline: 12px;
+  bottom: -1px;
+  height: 6px;
+  background-image: radial-gradient(circle at 3px 0, transparent 0 3.5px, var(--tomate) 3.5px);
+  background-size: 7px 6px;
+  background-repeat: repeat-x;
+}
+
+.ticket-cab {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 15px 12px;
+  border-bottom: 2px dashed var(--borda-ticket);
+}
+.ticket-cod {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: var(--tinta-fraca);
+  text-transform: uppercase;
+}
+.ticket-nome {
+  font-family: var(--display);
+  font-weight: 700;
+  font-stretch: 82%;
+  font-size: 1.24rem;
+  line-height: 1.08;
+  margin-top: 3px;
+}
+.ticket-preco {
+  font-family: var(--display);
+  font-weight: 800;
+  font-stretch: 84%;
+  font-size: 1.36rem;
+  color: var(--tomate);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  line-height: 1;
+}
+.ticket-preco small { display: block; font-family: var(--texto); font-size: .68rem; font-weight: 600; color: var(--tinta-fraca); letter-spacing: .06em; }
+
+.ticket-corpo { padding: 13px 15px 15px; flex: 1; display: flex; flex-direction: column; }
+.ticket-tamanho {
+  display: inline-block;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--tinta-media);
+  margin-bottom: 7px;
+}
+.ticket-ingredientes {
+  font-size: .89rem;
+  line-height: 1.55;
+  color: var(--tinta-media);
+}
+.ticket-ia {
+  margin-top: 10px;
+  padding: 9px 11px;
+  background: var(--queijo-claro);
+  border-left: 3px solid var(--queijo);
+  font-size: .85rem;
+  line-height: 1.5;
+}
+.ticket-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 9px; }
+.ticket-tag {
+  font-size: .7rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  background: var(--massa-vazia);
+  border-radius: 999px;
+  color: var(--tinta-media);
+}
+.ticket-rodape {
+  margin-top: auto;
+  padding-top: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.ticket-nota { font-size: .8rem; color: var(--tinta-media); display: flex; align-items: center; gap: 5px; }
+.ticket-nota .qtd { color: var(--tinta-fraca); font-size: .76rem; }
+
+/* ---------------- Rodapé ---------------- */
+.rodape {
+  margin-top: 56px;
+  padding: 26px 20px 34px;
+  background: var(--tomate-tinta);
+  border-top: 4px solid var(--tomate-fundo);
+  text-align: center;
+  color: rgba(253, 243, 221, .68);
+  font-size: .87rem;
+}
+.rodape p { margin-bottom: 6px; }
+.rodape a { color: var(--queijo); font-weight: 600; }
+
+/* ---------------- Carrinho ---------------- */
+.carrinho-linha {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px dashed var(--borda-ticket);
+}
+.carrinho-linha:last-child { border-bottom: none; }
+.carrinho-linha strong { display: block; font-size: .95rem; }
+.carrinho-obs { font-size: .78rem; color: var(--tinta-fraca); display: block; margin-top: 2px; }
+.qtd-ctrl { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
+.qtd-ctrl button {
+  width: 27px;
+  height: 27px;
+  border: 2px solid var(--tinta);
+  border-radius: var(--raio);
+  background: var(--massa-clara);
+  font-weight: 800;
+  line-height: 1;
+  padding: 0;
+}
+.qtd-ctrl button:hover { background: var(--queijo); }
+.qtd-ctrl .qtd-num { min-width: 20px; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
+.qtd-ctrl .qtd-preco { margin-left: 8px; font-weight: 700; font-variant-numeric: tabular-nums; min-width: 78px; text-align: right; }
+.carrinho-total {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 3px solid var(--tinta);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--display);
+  font-weight: 800;
+  font-stretch: 84%;
+  font-size: 1.4rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------------- Detalhe da pizza ---------------- */
+.detalhe-preco {
+  font-family: var(--display);
+  font-weight: 800;
+  font-stretch: 82%;
+  font-size: 2.1rem;
+  color: var(--tomate);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.avaliacao-item {
+  padding: 13px 0;
+  border-bottom: 1px dashed var(--borda-ticket);
+}
+.avaliacao-item:last-child { border-bottom: none; }
+.avaliacao-topo { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+.avaliacao-autor { font-weight: 700; font-size: .9rem; }
+.avaliacao-data { font-size: .76rem; color: var(--tinta-fraca); white-space: nowrap; }
+.avaliacao-comentario { margin-top: 5px; font-size: .9rem; line-height: 1.55; }
+.avaliacao-resposta {
+  margin-top: 9px;
+  padding: 10px 12px;
+  background: var(--manjericao-claro);
+  border-left: 3px solid var(--manjericao);
+  font-size: .87rem;
+  line-height: 1.55;
+}
+.avaliacao-resposta b { display: block; font-size: .74rem; letter-spacing: .06em; text-transform: uppercase; color: var(--manjericao); margin-bottom: 3px; }
+
+/* ---------------- Minhas interações ---------------- */
+.interacao-bloco {
+  background: var(--massa);
+  border: 2px solid var(--tinta);
+  border-radius: var(--raio);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.interacao-cab { display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 9px; }
+.interacao-cab strong { font-family: var(--display); font-weight: 700; font-stretch: 84%; font-size: 1.06rem; }
+.interacao-itens { font-size: .88rem; color: var(--tinta-media); line-height: 1.65; }
+.interacao-total { font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* ---------------- Abas da conta ---------------- */
+.abas-conta { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+.aba-conta {
+  background: transparent;
+  border: 2px solid var(--tinta);
+  color: var(--tinta);
+  padding: 6px 14px;
+  border-radius: var(--raio);
+  font-size: .87rem;
+  font-weight: 700;
+}
+.aba-conta[aria-selected='true'] { background: var(--tinta); color: var(--massa-clara); }
+
+/* ---------------- Sugestão da IA ---------------- */
+.sugestao-ia {
+  margin-top: 14px;
+  padding: 15px 17px;
+  background: var(--queijo-claro);
+  border: 2px dashed #b58c07;
+  border-radius: var(--raio);
+}
+.sugestao-ia-texto { font-size: .95rem; line-height: 1.55; margin-top: 6px; }
+
+/* ---------------- Avaliar (seletor de estrelas) ---------------- */
+.estrela-picker { display: flex; gap: 4px; }
+.estrela-picker button {
+  background: none;
+  border: none;
+  font-size: 1.85rem;
+  line-height: 1;
+  padding: 0 2px;
+  color: var(--borda-ticket);
+  transition: transform .12s ease, color .12s ease;
+}
+.estrela-picker button[data-preenchida='1'] { color: var(--queijo); }
+.estrela-picker button:hover { transform: scale(1.18); }
+
+/* ---------------- Sobre ---------------- */
+.sobre {
+  background: var(--massa);
+  border: 3px solid var(--tinta);
+  border-radius: var(--raio);
+  padding: 30px 32px 36px;
+  margin-top: 30px;
+  box-shadow: var(--sombra-ticket);
+}
+.sobre h2 {
+  font-family: var(--display);
+  font-weight: 800;
+  font-stretch: 80%;
+  font-size: 1.85rem;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid var(--tomate-fundo);
+}
+.sobre p { font-size: .96rem; line-height: 1.68; color: var(--tinta-media); margin-bottom: 11px; max-width: 72ch; }
+.sobre h3 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-stretch: 85%;
+  font-size: 1.1rem;
+  margin: 20px 0 8px;
+  color: var(--tinta);
+}
+.sobre ul { margin-left: 20px; font-size: .93rem; line-height: 1.75; color: var(--tinta-media); }
+.sobre code {
+  background: var(--massa-vazia);
+  padding: 1px 6px;
+  border-radius: 2px;
+  font-size: .88em;
+}
+
+/* ---------------- Responsivo ---------------- */
+@media (max-width: 900px) {
+  .vitrine-grade { grid-template-columns: 1fr; gap: 24px; }
+  .carimbo { width: 132px; height: 132px; justify-self: start; }
+  .pesquisa { grid-template-columns: 1fr; }
+  .vitrine { padding: 28px 24px 34px; }
+  .secao-titulo { font-size: 1.45rem; }
+}
+@media (max-width: 560px) {
+  .container { padding: 0 14px; }
+  .topo-interno { padding: 11px 14px; gap: 10px; }
+  .marca-nome { font-size: 1.2rem; }
+  .marca-lema { display: none; }
+  .btn { padding: 10px 15px; font-size: .88rem; }
+  .btn--rotulo-longo .btn-texto { display: none; }
+  .modal { padding: 20px; }
+}

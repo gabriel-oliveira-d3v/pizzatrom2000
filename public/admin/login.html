@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entrar — PizzaTrom2000 Admin</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🍕</text></svg>">
+  <style>
+    body { display: flex; align-items: center; justify-content: center; padding: 22px; }
+    .login-caixa {
+      background: var(--massa);
+      border: 3px solid var(--tinta);
+      border-radius: var(--raio);
+      padding: 34px 30px;
+      width: 100%;
+      max-width: 392px;
+      box-shadow: var(--sombra-alta);
+      position: relative;
+    }
+    .login-caixa::before {
+      content: '';
+      position: absolute;
+      inset: 0 0 auto;
+      height: 9px;
+      background: repeating-linear-gradient(90deg, var(--tomate) 0 22px, var(--queijo) 22px 44px, var(--manjericao) 44px 66px);
+    }
+    .login-titulo {
+      font-family: var(--display);
+      font-weight: 800;
+      font-stretch: 76%;
+      font-size: 1.85rem;
+      text-transform: uppercase;
+      line-height: .95;
+      letter-spacing: -.02em;
+    }
+    .login-sub { color: var(--tinta-media); font-size: .9rem; margin: 7px 0 22px; }
+    .login-rodape {
+      margin-top: 20px;
+      padding-top: 14px;
+      border-top: 2px dashed var(--borda-ticket);
+      text-align: center;
+      font-size: .84rem;
+    }
+    .login-rodape a { color: var(--tomate-fundo); font-weight: 700; }
+    .login-aviso {
+      margin-top: 18px;
+      padding: 11px 13px;
+      background: var(--queijo-claro);
+      border: 1.5px dashed #b58c07;
+      border-radius: var(--raio);
+      font-size: .82rem;
+      color: #7a5800;
+      line-height: 1.55;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-caixa">
+    <h1 class="login-titulo">Pizza<br>Trom2000</h1>
+    <p class="login-sub">Área restrita — entre com a conta de administrador.</p>
+
+    <form id="form-login">
+      <div class="campo">
+        <label for="email">E-mail</label>
+        <input id="email" type="email" required autocomplete="username" autofocus placeholder="admin@pizzatrom2000.com">
+      </div>
+      <div class="campo">
+        <label for="senha">Senha</label>
+        <input id="senha" type="password" required autocomplete="current-password" placeholder="Sua senha">
+      </div>
+      <p class="mensagem-erro" id="login-erro" role="alert"></p>
+      <button type="submit" class="btn btn--principal btn--largo" id="btn-entrar">Entrar no painel</button>
+    </form>
+
+    <p class="login-aviso" id="login-aviso">
+      <strong>Conta de demonstração</strong><br>
+      admin@pizzatrom2000.com · senha <code>admin123</code>
+    </p>
+
+    <div class="login-rodape">
+      <a href="../index.html">← Voltar para a loja</a>
+    </div>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script>
+    const API = (window.__API_BASE__ || '').replace(/\/$/, '');
+    const sairPara = () => location.replace(API ? `${API}/admin/login.html` : 'login.html');
+
+    // já está logado? vai direto ao painel
+    fetch(`${API}/api/auth/me`, { credentials: 'include' })
+      .then((r) => { if (r.ok) location.replace(API ? `${API}/admin/` : './'); })
+      .catch(() => {});
+
+    document.getElementById('form-login').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const erro = document.getElementById('login-erro');
+      const btn = document.getElementById('btn-entrar');
+      erro.textContent = '';
+      btn.disabled = true;
+      btn.textContent = 'Entrando…';
+      try {
+        const r = await fetch(`${API}/api/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({
+            email: document.getElementById('email').value.trim(),
+            senha: document.getElementById('senha').value,
+          }),
+        });
+        const dados = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(dados.erro || 'Não foi possível entrar.');
+        location.replace(API ? `${API}/admin/` : './');
+      } catch (err) {
+        erro.textContent = err.message;
+        btn.disabled = false;
+        btn.textContent = 'Entrar no painel';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel — PizzaTrom2000 Admin</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="admin.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🍕</text></svg>">
+</head>
+<body>
+
+  <!-- ============ TOPO ============ -->
+  <header class="topo-admin">
+    <h1>🍕 PizzaTrom2000 <span>Painel</span></h1>
+    <nav id="abas" aria-label="Seções do painel">
+      <button class="aba ativa" data-aba="dashboard">Painel</button>
+      <button class="aba" data-aba="pedidos">Pedidos</button>
+      <button class="aba" data-aba="avaliacoes">Avaliações</button>
+      <button class="aba" data-aba="pizzas">Pizzas</button>
+      <button class="aba" data-aba="clientes">Clientes</button>
+      <button class="aba" data-aba="admins">Admins</button>
+      <button class="aba" data-aba="permissoes">Permissões</button>
+    </nav>
+    <div class="admin-user">
+      <span id="admin-nome"></span>
+      <a href="/" class="btn btn--fantasma btn--mini" target="_blank" rel="noopener">Ver loja</a>
+      <button class="btn btn--claro btn--mini" id="btn-sair" type="button">Sair</button>
+    </div>
+  </header>
+
+  <main class="container-admin">
+
+    <!-- ============ PAINEL (DASHBOARD) ============ -->
+    <section id="secao-dashboard" class="secao ativa">
+      <div class="carimbo-painel">
+        <div>
+          <h2>Como vai<br>a cozinha</h2>
+        </div>
+        <div>
+          <p id="painel-data">Carregando o resumo do dia…</p>
+          <p><span class="selo-ia-painel">🤖 Textos do site gerados com IA (Google Gemini)</span></p>
+        </div>
+        <button class="btn btn--claro btn--mini" id="btn-gerar-ia" type="button" title="Regenera o texto de apresentação do site a partir do cardápio">
+          Gerar texto da IA
+        </button>
+      </div>
+
+      <div class="kpis" id="kpis"></div>
+
+      <div class="graficos">
+        <div class="grafico-caixa">
+          <h3 class="grafico-titulo">Pedidos por status</h3>
+          <p class="grafico-sub">Onde os pedidos estão agora.</p>
+          <div class="grafico-livro"><canvas id="g-status" aria-label="Gráfico de pizza: pedidos por status" role="img"></canvas></div>
+        </div>
+        <div class="grafico-caixa">
+          <h3 class="grafico-titulo">Faturamento dos últimos 7 dias</h3>
+          <p class="grafico-sub">Pedidos não cancelados, por dia.</p>
+          <div class="grafico-livro"><canvas id="g-faturamento" aria-label="Gráfico de barras: faturamento dos últimos 7 dias" role="img"></canvas></div>
+        </div>
+        <div class="grafico-caixa">
+          <h3 class="grafico-titulo">Pizzas mais pedidas</h3>
+          <p class="grafico-sub">Quantidade de unidades vendidas.</p>
+          <div class="grafico-livro"><canvas id="g-mais-pedidas" aria-label="Gráfico de barras horizontais: pizzas mais pedidas" role="img"></canvas></div>
+        </div>
+        <div class="grafico-caixa">
+          <h3 class="grafico-titulo">Nota média por pizza</h3>
+          <p class="grafico-sub">De 1 a 5, pelas avaliações dos clientes.</p>
+          <div class="grafico-livro"><canvas id="g-notas" aria-label="Gráfico de pizza: nota média por pizza" role="img"></canvas></div>
+        </div>
+      </div>
+
+      <div class="dupla-listas">
+        <div class="grafico-caixa">
+          <h3 class="grafico-titulo">Avaliações recentes</h3>
+          <div id="painel-avaliacoes"><p class="carregando">Carregando…</p></div>
+        </div>
+        <div class="grafico-caixa">
+          <h3 class="grafico-titulo">Clientes recentes</h3>
+          <div id="painel-clientes"><p class="carregando">Carregando…</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PEDIDOS ============ -->
+    <section id="secao-pedidos" class="secao">
+      <div class="secao-cab">
+        <div>
+          <h2>Pedidos</h2>
+          <p class="dica">Altere o status para acompanhar a pedido na cozinha. Ao confirmar, o cliente pode receber o e-mail de confirmação.</p>
+        </div>
+        <select id="filtro-status" aria-label="Filtrar por status">
+          <option value="">Todos os status</option>
+          <option value="pendente">Pendente</option>
+          <option value="em_preparo">Em preparo</option>
+          <option value="pronto">Pronto</option>
+          <option value="saiu_entrega">Saiu para entrega</option>
+          <option value="entregue">Entregue</option>
+          <option value="cancelado">Cancelado</option>
+        </select>
+      </div>
+      <div id="lista-pedidos"></div>
+    </section>
+
+    <!-- ============ AVALIAÇÕES ============ -->
+    <section id="secao-avaliacoes" class="secao">
+      <div class="secao-cab">
+        <div>
+          <h2>Avaliações</h2>
+          <p class="dica">Responda cada avaliação — a resposta fica pública na página da pizza. Marque enviar por e-mail para avisar o cliente.</p>
+        </div>
+        <select id="filtro-avaliacoes" aria-label="Filtrar avaliações">
+          <option value="">Todas</option>
+          <option value="1">Só as sem resposta</option>
+        </select>
+      </div>
+      <div id="lista-avaliacoes"></div>
+    </section>
+
+    <!-- ============ PIZZAS ============ -->
+    <section id="secao-pizzas" class="secao">
+      <div class="secao-cab">
+        <div>
+          <h2>Pizzas</h2>
+          <p class="dica">O item principal da página do cliente. “Destaque” faz a pizza aparecer no topo da loja.</p>
+        </div>
+        <button class="btn btn--claro" id="btn-nova-pizza" type="button">+ Nova pizza</button>
+      </div>
+      <div class="tabela-caixa">
+        <table>
+          <thead>
+            <tr><th>Pizza</th><th>Tamanho</th><th>Preço</th><th>Avaliação</th><th>Cadastrada por</th><th></th></tr>
+          </thead>
+          <tbody id="tab-pizzas"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ CLIENTES ============ -->
+    <section id="secao-clientes" class="secao">
+      <div class="secao-cab">
+        <div>
+          <h2>Clientes</h2>
+          <p class="dica">Quem criou conta na loja, quantos pedidos fez e quanto já gastou.</p>
+        </div>
+      </div>
+      <div class="tabela-caixa">
+        <table>
+          <thead>
+            <tr><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Pedidos</th><th>Avaliações</th><th>Total gasto</th><th>Cadastro</th><th></th></tr>
+          </thead>
+          <tbody id="tab-clientes"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ ADMINS ============ -->
+    <section id="secao-admins" class="secao">
+      <div class="secao-cab">
+        <div>
+          <h2>Administradores</h2>
+          <p class="dica">Quem pode entrar no painel e o que cada um pode fazer.</p>
+        </div>
+        <button class="btn btn--claro" id="btn-novo-admin" type="button">+ Novo admin</button>
+      </div>
+      <div class="tabela-caixa">
+        <table>
+          <thead><tr><th>Nome</th><th>E-mail</th><th>Cargo</th><th>Status</th><th>Permissões</th><th></th></tr></thead>
+          <tbody id="tab-admins"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ PERMISSÕES ============ -->
+    <section id="secao-permissoes" class="secao">
+      <div class="secao-cab">
+        <div>
+          <h2>Permissões</h2>
+          <p class="dica">Cada permissão libera um grupo de ações do painel para os admins que a têm.</p>
+        </div>
+        <button class="btn btn--claro" id="btn-nova-permissao" type="button">+ Nova permissão</button>
+      </div>
+      <div class="tabela-caixa">
+        <table>
+          <thead><tr><th>Nome</th><th>Descrição</th><th>Admins com ela</th><th></th></tr></thead>
+          <tbody id="tab-permissoes"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="rodape-admin">
+      <span>PizzaTrom2000 · painel administrativo</span>
+      <span>Express + PostgreSQL (Neon) + Google Gemini</span>
+    </footer>
+  </main>
+
+  <!-- ============ MODAL DE FORMULÁRIO ============ -->
+  <div class="modal-fundo" id="modal-form" role="dialog" aria-modal="true" aria-labelledby="modal-form-titulo">
+    <div class="modal modal--largo">
+      <h2 id="modal-form-titulo"></h2>
+      <div id="modal-form-corpo"></div>
+    </div>
+  </div>
+
+  <!-- ============ MODAL DE DETALHE ============ -->
+  <div class="modal-fundo" id="modal-detalhe" role="dialog" aria-modal="true" aria-labelledby="modal-detalhe-titulo">
+    <div class="modal modal--largo">
+      <h2 id="modal-detalhe-titulo"></h2>
+      <div id="modal-detalhe-corpo"></div>
+      <div class="modal-acoes">
+        <button class="btn btn--claro" id="btn-fechar-detalhe" type="button">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" defer></script>
+  <script src="../js/config.js"></script>
+  <script src="admin.js" defer></script>
+</body>
+</html>
