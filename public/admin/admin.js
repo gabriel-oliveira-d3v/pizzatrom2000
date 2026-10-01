@@ -49,6 +49,9 @@ async function api(caminho, opcoes = {}) {
     location.replace('/admin/login.html');
     throw new Error('Não autenticado.');
   }
+  const dados = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(dados.erro || `Erro ${r.status}`);
+  return dados;
 }
 
 let timerToast;
