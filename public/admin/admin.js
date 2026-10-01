@@ -44,12 +44,11 @@ async function api(caminho, opcoes = {}) {
     credentials: 'include',
   });
   if (r.status === 401) {
-    location.replace(`${API ? '' : ''}admin/login.html`);
+    // caminho absoluto na origem do front: não pode ser relativo, senão ao
+    // abrir /admin/ o navegador resolveria como /admin/admin/login.html
+    location.replace('/admin/login.html');
     throw new Error('Não autenticado.');
   }
-  const dados = await r.json().catch(() => ({}));
-  if (!r.ok) throw new Error(dados.erro || `Erro ${r.status}`);
-  return dados;
 }
 
 let timerToast;

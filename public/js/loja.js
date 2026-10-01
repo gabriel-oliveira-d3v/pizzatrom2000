@@ -272,13 +272,22 @@ async function carregarTextoIA() {
   if (d.conteudo) {
     $('#vitrine-texto').textContent = d.conteudo;
     marca.hidden = false;
+    marca.classList.remove('marca-ia--btn');
+    marca.removeAttribute('role');
     marca.innerHTML = `<span aria-hidden="true">🤖</span> Texto escrito por <b>${esc(d.modelo)}</b> com base no nosso cardápio`;
   } else if (d.precisa_login) {
-    // visitante anônimo: texto padrão + convite (a cota da IA só é gasta com login)
+    // visitante anônimo: texto padrão + convite clicável para entrar
+    // (a cota da IA só é gasta depois do login)
     marca.hidden = false;
+    marca.classList.add('marca-ia--btn');
+    marca.setAttribute('role', 'button');
+    marca.setAttribute('tabindex', '0');
     marca.innerHTML = '<span aria-hidden="true">🤖</span> Entre na sua conta para ver a sugestão da pizzar<b>IA</b>';
+    marca.onclick = () => exigirLogin('Entre na sua conta para ver a sugestão da pizzarIA.');
   } else if (!d.disponivel) {
     marca.hidden = false;
+    marca.classList.remove('marca-ia--btn');
+    marca.removeAttribute('role');
     marca.innerHTML = '<span aria-hidden="true">🤖</span> A IA entra no ar assim que a chave <b>GEMINI_API_KEY</b> estiver configurada';
   }
 
